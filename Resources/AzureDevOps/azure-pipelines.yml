@@ -23,7 +23,7 @@ stages:
 - stage: Build
   jobs:
   - job:
-    displayName: Build and test application & templates"
+    displayName: Build and test application & templates
     steps:
     - template: /AzureDevOpsTemplates/Build/StepTemplates/dfc-arm-build.yml@dfc-devops
       parameters:

@@ -29,6 +29,9 @@
           "comment": "Bug in tokenisation task prevents referencing Release.EnvironmentName directly.  https://github.com/TotalALM/VSTS-Tasks/issues/29"
         }
       },
+      "ExceptionCountThreshold": {
+        "value": "__ExceptionCountThreshold__"
+      },
       "sharedAppServicePlanName": {
         "value": "__sharedAppServicePlanName__"
       },

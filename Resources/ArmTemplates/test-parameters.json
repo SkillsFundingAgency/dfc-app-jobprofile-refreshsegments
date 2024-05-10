@@ -26,6 +26,9 @@
       "enableAlerts": {
         "value": false
       },
+      "ExceptionCountThreshold": {
+        "value": "0"
+      },
       "workspaceName": {
           "value": "aTestLogAnalyticsAccount"
       },
