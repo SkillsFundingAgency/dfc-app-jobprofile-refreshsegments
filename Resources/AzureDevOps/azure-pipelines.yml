@@ -60,7 +60,7 @@ stages:
       ResourceGroup: '$(ResourceGroup)'
       PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/DeploymentPackages/${{ variables.SolutionBaseName }}.zip"
       ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
-      EnvironmentName: DEV
+      EnvironmentName: DEV_AppJobProfRefSeg
       DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
       SharedResourceGroup: "$(SharedResourceGroup)"
       DfCDevopsPath: '$(Agent.BuildDirectory)/s/dfc-devops'
