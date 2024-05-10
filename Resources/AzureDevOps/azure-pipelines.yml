@@ -36,3 +36,33 @@ stages:
         BuildPlatform: $(BuildPlatform)
         BuildConfiguration: $(BuildConfiguration)
         PublishWebApp: true
+
+- stage: DeployToDev
+  dependsOn: Build
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  displayName: Deploy to DEV
+  variables:
+  - group: dfc-shared-dev
+  - group: dfc-app-shared-all
+  - group: dfc-shared-all
+  - group: dfc-stax-shared-dev
+  - group: dfc-stax-shared-all
+  - group: dfc-app-shared-dev
+  - group: 'KeyVault - dfc-dev-shared-kv'
+  - template: VariableTemplates/DevEnvironmentVariables.yml
+  jobs:
+  - template: JobTemplates/deploy-environment.yml
+    parameters:
+      AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
+      EnvironmentTag: '$(EnvironmentTag)'
+      ParentBusiness: '$(ParentBusiness)'
+      ServiceOffering: '$(ServiceOffering)'
+      ResourceGroup: '$(ResourceGroup)'
+      PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/DeploymentPackages/${{ variables.SolutionBaseName }}.zip"
+      ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
+      EnvironmentName: DEV
+      DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
+      SharedResourceGroup: "$(SharedResourceGroup)"
+      DfCDevopsPath: '$(Agent.BuildDirectory)/s/dfc-devops'
+      AppSharedResourceGroup: $(AppSharedResourceGroup)
+      FunctionAppName: $(functionAppName)
