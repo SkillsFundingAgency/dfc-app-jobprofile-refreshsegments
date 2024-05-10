@@ -1,0 +1,51 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "appServiceDomain": {
+        "value": "__appServiceDomain__"
+      },
+      "appSharedResourceGroup": {
+        "value": "__appSharedResourceGroup__"
+      },
+      "appSharedServiceBusName": {
+        "value": "__appSharedServiceBusName__"
+      },
+      "appSharedStorageAccountName": {
+        "value": "__appSharedStorageAccountName__"
+      },
+      "aseHostingEnvironmentName": {
+        "value": "__aseHostingEnvironmentName__"
+      },
+      "aseResourceGroup": {
+        "value": "__aseResourceGroup__"
+      },
+      "aspTier": {
+        "value": "__aspTier__"
+      },
+      "environment": {
+        "value": "__ReleaseEnvironmentName__",
+        "metadata": {
+          "comment": "Bug in tokenisation task prevents referencing Release.EnvironmentName directly.  https://github.com/TotalALM/VSTS-Tasks/issues/29"
+        }
+      },
+      "sharedAppServicePlanName": {
+        "value": "__sharedAppServicePlanName__"
+      },
+      "sharedAppServicePlanResourceGroup": {
+        "value": "__appSharedResourceGroup__"
+      },
+      "refreshTopicName": {
+        "value": "__refreshTopicName__"
+      },
+      "enableAlerts": {
+        "value": __EnableAzureMonitorAlerting__
+      },
+      "workspaceName": {
+          "value": "__sharedLogAnalyticsWorkspace__"
+      },
+      "workspaceResourceGroup": {
+          "value": "__sharedLogAnalyticsResourceGroup__"
+      }
+    }
+  }
