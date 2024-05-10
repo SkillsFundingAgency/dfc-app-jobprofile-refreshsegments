@@ -58,7 +58,7 @@ stages:
       ParentBusiness: '$(ParentBusiness)'
       ServiceOffering: '$(ServiceOffering)'
       ResourceGroup: '$(ResourceGroup)'
-      PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/DeploymentPackages/${{ variables.SolutionBaseName }}.zip"
+      PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/DeploymentPackages/${{ variables.SolutionBaseName }}/${{ variables.SolutionBaseName }}.zip"
       ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
       EnvironmentName: DEV_AppJobProfRefSeg
       DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
