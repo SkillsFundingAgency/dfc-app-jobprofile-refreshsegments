@@ -37,6 +37,35 @@ stages:
         BuildConfiguration: $(BuildConfiguration)
         PublishWebApp: true
 
+- stage: DeployToLab
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
+  displayName: Deploy to LAB
+  variables:
+  - group: dfc-shared-lab
+  - group: dfc-app-shared-all
+  - group: dfc-shared-all
+  - group: dfc-stax-shared-lab
+  - group: dfc-stax-shared-all
+  - group: dfc-app-shared-lab
+  - group: 'KeyVault - dfc-lab-shared-kv'
+  - template: VariableTemplates/LabEnvironmentVariables.yml
+  jobs:
+  - template: JobTemplates/deploy-environment.yml
+    parameters:
+      AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
+      EnvironmentTag: '$(EnvironmentTag)'
+      ParentBusiness: '$(ParentBusiness)'
+      ServiceOffering: '$(ServiceOffering)'
+      ResourceGroup: '$(ResourceGroup)'
+      PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/DeploymentPackages/${{ variables.SolutionBaseName }}/${{ variables.SolutionBaseName }}.zip"
+      ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
+      EnvironmentName: LAB_AppJobProfRefSeg
+      DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
+      SharedResourceGroup: "$(SharedResourceGroup)"
+      DfCDevopsPath: '$(Agent.BuildDirectory)/s/dfc-devops'
+      AppSharedResourceGroup: $(AppSharedResourceGroup)
+      FunctionAppName: $(functionAppName)
+
 - stage: DeployToDev
   dependsOn: Build
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
@@ -61,6 +90,93 @@ stages:
       PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/DeploymentPackages/${{ variables.SolutionBaseName }}/${{ variables.SolutionBaseName }}.zip"
       ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
       EnvironmentName: DEV_AppJobProfRefSeg
+      DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
+      SharedResourceGroup: "$(SharedResourceGroup)"
+      DfCDevopsPath: '$(Agent.BuildDirectory)/s/dfc-devops'
+      AppSharedResourceGroup: $(AppSharedResourceGroup)
+      FunctionAppName: $(functionAppName)
+
+- stage: DeployToSit
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  displayName: Deploy to SIT
+  variables:
+  - group: dfc-shared-sit
+  - group: dfc-app-shared-all
+  - group: dfc-shared-all
+  - group: dfc-stax-shared-sit
+  - group: dfc-stax-shared-all
+  - group: dfc-app-shared-sit
+  - group: 'KeyVault - dfc-sit-shared-kv'
+  - template: VariableTemplates/SitEnvironmentVariables.yml
+  jobs:
+  - template: JobTemplates/deploy-environment.yml
+    parameters:
+      AzureSubscription: 'SFA-CDH-Dev/Test (962cae10-2950-412a-93e3-d8ae92b17896)'
+      EnvironmentTag: '$(EnvironmentTag)'
+      ParentBusiness: '$(ParentBusiness)'
+      ServiceOffering: '$(ServiceOffering)'
+      ResourceGroup: '$(ResourceGroup)'
+      PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/DeploymentPackages/${{ variables.SolutionBaseName }}/${{ variables.SolutionBaseName }}.zip"
+      ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
+      EnvironmentName: SIT_AppJobProfRefSeg
+      DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
+      SharedResourceGroup: "$(SharedResourceGroup)"
+      DfCDevopsPath: '$(Agent.BuildDirectory)/s/dfc-devops'
+      AppSharedResourceGroup: $(AppSharedResourceGroup)
+      FunctionAppName: $(functionAppName)
+
+- stage: DeployToPP
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  displayName: Deploy to PP
+  variables:
+  - group: dfc-shared-pp
+  - group: dfc-app-shared-all
+  - group: dfc-shared-all
+  - group: dfc-stax-shared-pp
+  - group: dfc-stax-shared-all
+  - group: dfc-app-shared-pp
+  - group: 'KeyVault - dfc-pp-shared-kv'
+  - template: VariableTemplates/PPEnvironmentVariables.yml
+  jobs:
+  - template: JobTemplates/deploy-environment.yml
+    parameters:
+      AzureSubscription: 'SFA-DIG-PreProd (931bc9f6-359c-4f65-a753-1ee191a1fd6c)'
+      EnvironmentTag: '$(EnvironmentTag)'
+      ParentBusiness: '$(ParentBusiness)'
+      ServiceOffering: '$(ServiceOffering)'
+      ResourceGroup: '$(ResourceGroup)'
+      PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/DeploymentPackages/${{ variables.SolutionBaseName }}/${{ variables.SolutionBaseName }}.zip"
+      ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
+      EnvironmentName: PP_AppJobProfRefSeg
+      DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
+      SharedResourceGroup: "$(SharedResourceGroup)"
+      DfCDevopsPath: '$(Agent.BuildDirectory)/s/dfc-devops'
+      AppSharedResourceGroup: $(AppSharedResourceGroup)
+      FunctionAppName: $(functionAppName)
+
+- stage: DeployToPRD
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  displayName: Deploy to PRD
+  variables:
+  - group: dfc-shared-prd
+  - group: dfc-app-shared-all
+  - group: dfc-shared-all
+  - group: dfc-stax-shared-prd
+  - group: dfc-stax-shared-all
+  - group: dfc-app-shared-prd
+  - group: 'KeyVault - dfc-prd-shared-kv'
+  - template: VariableTemplates/PrdEnvironmentVariables.yml
+  jobs:
+  - template: JobTemplates/deploy-environment.yml
+    parameters:
+      AzureSubscription: 'SFA-DIG-Prod (6c93f7dc-6c36-4ea6-8de3-3f4574f88027)'
+      EnvironmentTag: '$(EnvironmentTag)'
+      ParentBusiness: '$(ParentBusiness)'
+      ServiceOffering: '$(ServiceOffering)'
+      ResourceGroup: '$(ResourceGroup)'
+      PackageFile:  "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.DeploymentPackages/DeploymentPackages/${{ variables.SolutionBaseName }}/${{ variables.SolutionBaseName }}.zip"
+      ArmTemplateFolder: "$(Pipeline.Workspace)/${{ variables.SolutionBaseName }}.Resources.ArmTemplates/"
+      EnvironmentName: PRD_AppJobProfRefSeg
       DFCAzureDevOpsProjectGuid: $(DFCAzureDevOpsProjectGuid)
       SharedResourceGroup: "$(SharedResourceGroup)"
       DfCDevopsPath: '$(Agent.BuildDirectory)/s/dfc-devops'
