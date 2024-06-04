@@ -14,14 +14,8 @@
       "appSharedStorageAccountName": {
         "value": "__appSharedStorageAccountName__"
       },
-      "aseHostingEnvironmentName": {
-        "value": "__aseHostingEnvironmentName__"
-      },
-      "aseResourceGroup": {
-        "value": "__aseResourceGroup__"
-      },
-      "aspTier": {
-        "value": "__aspTier__"
+      "functionAppName": {
+        "value": "__FunctionAppName__"
       },
       "environment": {
         "value": "__ReleaseEnvironmentName__",

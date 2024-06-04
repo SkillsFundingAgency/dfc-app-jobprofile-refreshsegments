@@ -17,6 +17,9 @@
       "Environment": {
         "value": "FOO"
       },
+      "functionAppName": {
+        "value": "dfc-foo-app-jobprof-refseg-fa-ver"
+      },
       "sharedAppServicePlanName": {
         "value": "dfc-dev-app-shared-asp"
       },
