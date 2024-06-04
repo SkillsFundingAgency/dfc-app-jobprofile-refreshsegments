@@ -16,6 +16,6 @@ variables:
 - name: FunctionAppInsightName
   value: $(WebAppPrefix)-ai
 - name: FunctionAppName
-  value: $(WebAppPrefix)-fa
+  value: $(WebAppPrefix)-fa-ver2
 - name: ResourceGroup
   value: $(WebAppPrefix)-rg
