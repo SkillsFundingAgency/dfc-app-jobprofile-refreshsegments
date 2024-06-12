@@ -1,10 +1,4 @@
 variables:
-- name: aspInstances
-  value: 2
-- name: aspSize
-  value: 2
-- name: aspTier
-  value: Standard
 - name: ExceptionCountThreshold
   value: 10
 - name: EnableAzureMonitorAlerting

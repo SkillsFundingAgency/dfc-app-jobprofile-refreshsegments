@@ -14,25 +14,8 @@
     "appSharedStorageAccountName": {
       "type": "string"
     },
-    "aseHostingEnvironmentName": {
-      "type": "string",
-      "defaultValue": ""
-    },
-    "aseResourceGroup": {
-      "type": "string",
-      "defaultValue": ""
-    },
-    "aspInstances": {
-      "type": "int",
-      "defaultValue": 2
-    },
-    "aspSize": {
-      "type": "string",
-      "defaultValue": ""
-    },
-    "aspTier": {
-      "type": "string",
-      "defaultValue": ""
+    "functionAppName": {
+      "type": "string"
     },
     "environment": {
       "type": "string"
@@ -73,8 +56,7 @@
         "appServicePlanResourceGroup": "[if(greater(length(parameters('SharedAppServicePlanResourceGroup')), 0), parameters('SharedAppServicePlanResourceGroup'), resourceGroup().name)]",
         "buildingBlocksDfcBaseUrl": "https://raw.githubusercontent.com/SkillsFundingAgency/dfc-devops/master/ArmTemplates/",
         "resourcePrefix": "[tolower(concat('dfc-', parameters('Environment'), '-app-jobprof-refseg'))]",
-        "functionAppName": "[concat(variables('ResourcePrefix'), '-fa')]",
-        "functionAppInsightsName": "[concat(variables('functionAppName'), '-ai')]",
+        "functionAppInsightsName": "[concat(parameters('functionAppName'), '-ai')]",
         "refreshSubscriptionName": "job-profile-segment-refresh",
         "ActionGroupName": "[concat('dfc-', replace(tolower(parameters('Environment')), '-draft', ''), '-app-sharedresources-actgrp')]"
     },
@@ -107,7 +89,7 @@
     },
     {
       "apiVersion": "2017-05-10",
-      "name": "[variables('functionAppName')]",
+      "name": "[parameters('functionAppName')]",
       "type": "Microsoft.Resources/deployments",
       "properties": {
         "mode": "Incremental",
@@ -117,7 +99,7 @@
         },
         "parameters": {
           "appServiceName": {
-            "value": "[variables('functionAppName')]"
+            "value": "[parameters('functionAppName')]"
           },
           "appServicePlanName": {
             "value": "[variables('appServicePlanName')]"
